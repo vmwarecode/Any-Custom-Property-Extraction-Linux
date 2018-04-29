@@ -1,0 +1,80 @@
+'@type': "SoftwareComponentType"
+createdDate: "2018-04-29T12:28:54.205Z"
+lastUpdated: "2018-04-29T12:41:04.582Z"
+id: "Software.Anycustompropertybinding"
+name: "Any custom property binding"
+description: "An example on Linux how one can use a grep query to find and bind any\
+  \ custom property that is included as part of the payload with a provisioned machine\
+  \ in vRA. This software component works by searching the /opt/vmware-appdirector/agent/logs/agent_bootstrap.log\
+  \ file for the desired custom property and, through a computed property, sets its\
+  \ value to the value found for that custom property."
+publishStatus: "PUBLISHED"
+publishStatusName: "Published"
+schema:
+  fields:
+  - id: "host"
+    label: "Container"
+    description: ""
+    dataType:
+      type: "ref"
+      componentTypeId: "com.vmware.csp.iaas.blueprint.service"
+      classId: "Infrastructure.Machine.Schema"
+      label: "Machine"
+    state:
+      dependencies: []
+      facets:
+      - type: "internal"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: true
+      - type: "visible"
+        value:
+          type: "constantClause"
+          value:
+            type: "boolean"
+            value: false
+      - type: "mandatory"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: true
+    isMultiValued: false
+  - id: "testprop3"
+    label: "testprop3"
+    description: "Property 3"
+    dataType:
+      type: "primitive"
+      typeId: "STRING"
+    state:
+      dependencies: []
+      facets:
+      - type: "derivedValue"
+        value:
+          type: "constant"
+      - type: "editable"
+        value:
+          type: "constant"
+          value:
+            type: "boolean"
+            value: false
+    isMultiValued: false
+containerFieldId: "host"
+lifecycleTasks:
+- createdDate: "2018-04-29T12:28:54.206Z"
+  lastUpdated: "2018-04-29T12:41:04.582Z"
+  script:
+    scriptContent: "#! /bin/bash\ntouch /tmp/proptest.txt\n#Extract the IP address\
+      \ of the second NIC from the\n#software agent's log file and set as a variable.\n\
+      #For any other custom property that is sent as a payload,\n#replace only the\
+      \ string \"virtualmachine.network1.address\"\n#with the desired custom property.\n\
+      testprop3=$(grep -Po \"(?<=virtualmachine.network1.address' value ')[^']*\"\
+      \ /opt/vmware-appdirector/agent/logs/agent_bootstrap.log | tail -n1)\necho \"\
+      IP is $testprop3\"\necho $testprop3 >> /tmp/proptest.txt"
+    isRebootAfter: false
+    scriptTypeId: "Bash"
+  taskDescriptorRef:
+    id: "INSTALL"
+    label: "Install"

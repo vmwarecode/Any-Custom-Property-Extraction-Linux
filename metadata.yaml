@@ -1,0 +1,11 @@
+name: "auto-generated-pkg-fdeafb02-2ceb-4393-8cfb-6ab20a29e2ea"
+productVersion: "7.3.0-SNAPSHOT"
+data:
+- locator: "software-component/Software.Anycustompropertybinding.yaml"
+  name: "Any custom property binding"
+  description: "An example on Linux how one can use a grep query to find and bind\
+    \ any custom property that is included as part of the payload with a provisioned\
+    \ machine in vRA. This software component works by searching the /opt/vmware-appdirector/agent/logs/agent_bootstrap.log\
+    \ file for the desired custom property and, through a computed property, sets\
+    \ its value to the value found for that custom property."
+exportTime: "2018-04-29T21:46:07.963Z"
